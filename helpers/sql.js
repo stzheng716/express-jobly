@@ -36,4 +36,23 @@ function sqlForPartialUpdate(dataToUpdate, jsToSql) {
   };
 }
 
+/** return object with whereClause as string, values as array if no data return empty obj with empty whereClause as string and value: array */
+
+function sqlForFilter(dataToFilter) {
+  const keys = Object.keys(dataToFilter);
+  if (keys.length === 0) {
+    return {
+      whereClause: "",
+      values: [],
+    }
+  };
+
+ whereClause
+
+  return {
+    whereClause: cols.join(", "),
+    values: Object.values(dataToUpdate),
+  };
+}
+
 module.exports = { sqlForPartialUpdate };
