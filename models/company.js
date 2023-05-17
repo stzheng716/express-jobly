@@ -50,15 +50,13 @@ class Company {
     return company;
   }
 
-  /** Find all companies.
+  /** Find all companies, with an optional filter eg { minEmployees: 10 }
    *
    * Returns [{ handle, name, description, numEmployees, logoUrl }, ...]
    * */
 
   static async findAll(filterParams) {
-    const { whereClause, values } = sqlForFilter(filterParams || {})
-    console.log("WHERE CLAUSE", whereClause)
-    console.log("VALUES", values)
+    const { whereClause, values } = sqlForFilter(filterParams || {});
     const companiesRes = await db.query(`
         SELECT handle,
                name,

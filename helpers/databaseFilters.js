@@ -8,7 +8,7 @@ class Filter {
     constructor(value) {
         this.value = value;
     }
-    /** Generate a where clause and '$' + index for the position of filter was 
+    /** Generate a where clause and '$' + index for the position of filter was
      * passed in */
     getWhereStringPart(startingParamIndex) {
         throw new Error("should not instantiate abstract Filter");
@@ -19,14 +19,16 @@ class Filter {
         return this.value;
     }
 
-    /** Take a object of filter names and values, returns array of corresponding 
-     * filter child classes 
-     * {nameLike: "google", minEmployees:10, maxEmployee:100} => 
+    /** Take a object of filter names and values, returns array of corresponding
+     * filter child classes
+     * {nameLike: "google", minEmployees:10, maxEmployee:100} =>
      * [CompanyNameLikeFilter, MinEmployeesFilter, ...]
      * */
 
     static buildFilters(filtersPOJO) {
-        this.validateFilter(filtersPOJO)
+
+        this.validateFilter(filtersPOJO);
+
         const filters = Object.entries(filtersPOJO)
             .map(([filterName, filterVal]) => {
 
@@ -41,15 +43,14 @@ class Filter {
         return filters;
     }
 
-    /**Take a object of filter names and values, determine if minEmployee and 
-     * maxEmployee are inside POJO and throw error if minEmployee is greater than 
+    /**Take an object of filter names and values, determine if minEmployee and
+     * maxEmployee are inside POJO and throw error if minEmployee is greater than
      * maxEmployee */
-    
+
     static validateFilter(filtersPOJO){
         if("minEmployees" in filtersPOJO && "maxEmployees" in filtersPOJO) {
-            if(filtersPOJO.minEmployees > filtersPOJO.maxEmployees){
-                throw new BadRequestError(`Min employees can't be greater 
-                than max employee`)
+            if(filtersPOJO.minEmployees > filtersPOJO.maxEmployees) {
+                throw new BadRequestError(`minEmployees can't be greater than maxEmployees`)
             }
         }
     }
@@ -85,6 +86,7 @@ class CompanyNameLikeFilter extends Filter {
         return `name ILIKE $${startingParamIndex}`;
     }
 
+    /** overridden to add '%'s for SQL ILIKE*/
     getValue() {
         return `%${this.name}%`;
     }
