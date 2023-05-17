@@ -52,6 +52,7 @@ router.post("/", ensureLoggedIn, async function (req, res, next) {
  */
 
 router.get("/", async function (req, res, next) {
+  console.log(req.query)
   const validator = jsonschema.validate(
     req.query,
     companyFilterSchema,
@@ -88,6 +89,7 @@ router.get("/:handle", async function (req, res, next) {
  *
  * Authorization required: login
  */
+// TODO: ask about how to valid req.query for ints without using regex
 
 router.patch("/:handle", ensureLoggedIn, async function (req, res, next) {
   const validator = jsonschema.validate(

@@ -1,5 +1,7 @@
 "use strict";
 
+const { BadRequestError } = require("../expressError");
+
 /** Abstract class for filters use to generate WHERE clause for sql statements. */
 
 class Filter {
@@ -24,6 +26,7 @@ class Filter {
      * */
 
     static buildFilters(filtersPOJO) {
+        this.validateFilter(filtersPOJO)
         const filters = Object.entries(filtersPOJO)
             .map(([filterName, filterVal]) => {
 
@@ -36,6 +39,19 @@ class Filter {
             });
 
         return filters;
+    }
+
+    /**Take a object of filter names and values, determine if minEmployee and 
+     * maxEmployee are inside POJO and throw error if minEmployee is greater than 
+     * maxEmployee */
+    
+    static validateFilter(filtersPOJO){
+        if("minEmployees" in filtersPOJO && "maxEmployees" in filtersPOJO) {
+            if(filtersPOJO.minEmployees > filtersPOJO.maxEmployees){
+                throw new BadRequestError(`Min employees can't be greater 
+                than max employee`)
+            }
+        }
     }
 }
 

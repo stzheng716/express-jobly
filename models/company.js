@@ -57,6 +57,8 @@ class Company {
 
   static async findAll(filterParams) {
     const { whereClause, values } = sqlForFilter(filterParams || {})
+    console.log("WHERE CLAUSE", whereClause)
+    console.log("VALUES", values)
     const companiesRes = await db.query(`
         SELECT handle,
                name,
