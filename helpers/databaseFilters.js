@@ -1,3 +1,7 @@
+"use strict";
+
+//TODO: ADD DOC STRINGS!!!!
+
 class Filter {
     constructor(value) {
         this.value = value;
@@ -12,15 +16,23 @@ class Filter {
     }
 
     static buildFilters(filtersPOJO) {
-        return Object.entries(filtersPOJO).map((filterName, filterVal) => {
+        const filters = Object.entries(filtersPOJO)
+            .map(([filterName, filterVal]) => {
 
-            // get the class corresponding to this filter
-            const filterClass = filterMap[filterName];
+                console.log("filterName", filterName);
+                console.log("filterVal", filterVal);
 
-            // construct instance of the class with the value
-            // for the filter specified by the user
-            return new filterClass(filterVal);
-        });
+                // get the class corresponding to this filter
+                const filterClass = filterMap[filterName];
+
+                console.log("filterClass: ", filterClass);
+
+                // construct instance of the class with the value
+                // for the filter specified by the user
+                return new filterClass(filterVal);
+            });
+
+        return filters;
     }
 }
 
@@ -68,4 +80,4 @@ const filterMap = {
 
 module.exports = {
     Filter
-}
+};

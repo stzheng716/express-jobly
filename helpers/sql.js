@@ -1,6 +1,7 @@
 "use strict";
 
 const { BadRequestError } = require("../expressError");
+const { Filter } = require("./databaseFilters");
 
 /**
  * @param {object} dataToUpdate object mapping keys to vals that will be set
@@ -47,12 +48,20 @@ function sqlForFilter(dataToFilter) {
     };
   };
 
-  whereClause;
+  const filters = Filter.buildFilters(dataToFilter);
+
+  const whereParts = [];
+  const values = [];
+
+  for (const filter of filters) {
+    whereParts.push(filter.getWhereStringPart(values.length + 1));
+    values.push(filter.getValue());
+  }
 
   return {
-    whereClause: cols.join(", "),
-    values: Object.values(dataToUpdate),
+    whereClause: whereParts.join(" AND "),
+    values
   };
 }
 
-module.exports = { sqlForPartialUpdate };
+module.exports = { sqlForPartialUpdate, sqlForFilter };
