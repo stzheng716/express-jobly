@@ -1,31 +1,34 @@
 "use strict";
 
-//TODO: ADD DOC STRINGS!!!!
+/** Abstract class for filters use to generate WHERE clause for sql statements. */
 
 class Filter {
     constructor(value) {
         this.value = value;
     }
-
+    /** Generate a where clause and '$' + index for the position of filter was 
+     * passed in */
     getWhereStringPart(startingParamIndex) {
         throw new Error("should not instantiate abstract Filter");
     }
 
+    /** Get value of specified value for this filter */
     getValue() {
         return this.value;
     }
+
+    /** Take a object of filter names and values, returns array of corresponding 
+     * filter child classes 
+     * {nameLike: "google", minEmployees:10, maxEmployee:100} => 
+     * [CompanyNameLikeFilter, MinEmployeesFilter, ...]
+     * */
 
     static buildFilters(filtersPOJO) {
         const filters = Object.entries(filtersPOJO)
             .map(([filterName, filterVal]) => {
 
-                console.log("filterName", filterName);
-                console.log("filterVal", filterVal);
-
                 // get the class corresponding to this filter
                 const filterClass = filterMap[filterName];
-
-                console.log("filterClass: ", filterClass);
 
                 // construct instance of the class with the value
                 // for the filter specified by the user

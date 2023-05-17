@@ -27,7 +27,7 @@ describe("sqlForFilter", function () {
         const dataToFilter = { minEmployees: 10 };
         const results = sqlForFilter(dataToFilter);
         expect(results).toEqual({
-            whereClause: `num_employees >= $1`,
+            whereClause: `WHERE num_employees >= $1`,
             values: [10]
         });
     });
@@ -40,15 +40,17 @@ describe("sqlForFilter", function () {
          };
         const results = sqlForFilter(dataToFilter);
         expect(results).toEqual({
-            whereClause: `num_employees >= $1 AND num_employees <= $2 AND name ILIKE $3`,
+            whereClause: `WHERE num_employees >= $1 AND num_employees <= $2 AND name ILIKE $3`,
             values: [10, 100, `%testName%`]
         });
     });
 
-    // test("throws BadRequestError due to no data", function () {
-    //     const dataToUpdate = {};
-    //     const jsToSql = { firstName: "first_name" };
-    //     expect(() => sqlForPartialUpdate(dataToUpdate, jsToSql))
-    //         .toThrow(BadRequestError);
-    // });
+    test("works with empty filter data", function () {
+        const dataToFilter = {};
+        const results = sqlForFilter(dataToFilter);
+        expect(results).toEqual({
+            whereClause: "",
+            values: []
+        });
+    });
 });

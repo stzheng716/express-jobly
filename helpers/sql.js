@@ -37,16 +37,21 @@ function sqlForPartialUpdate(dataToUpdate, jsToSql) {
   };
 }
 
-/** return object with whereClause as string, values as array if no data return empty obj with empty whereClause as string and value: array */
+
+/** 
+ * Take in an object with fields to filter {nameLike: "google", minEmployees:10, 
+ * maxEmployee:100}, returns object with whereClause joined by 'AND' and array 
+ * of values 
+ * {
+ *  whereClause: "WHERE num_employees >= $1 AND num_employees <= $2 AND name 
+ *    ILIKE $3",
+ *  values: [10, 100, `%testName%`]
+ * }
+ * 
+*/
 
 function sqlForFilter(dataToFilter) {
   const keys = Object.keys(dataToFilter);
-  if (keys.length === 0) {
-    return {
-      whereClause: "",
-      values: [],
-    };
-  };
 
   const filters = Filter.buildFilters(dataToFilter);
 
@@ -59,7 +64,7 @@ function sqlForFilter(dataToFilter) {
   }
 
   return {
-    whereClause: whereParts.join(" AND "),
+    whereClause: values.length > 0 ? "WHERE " + whereParts.join(" AND "): "",
     values
   };
 }
