@@ -27,7 +27,7 @@ function sqlForPartialUpdate(dataToUpdate, jsToSql) {
 
   // {firstName: 'Aliya', age: 32} => ['"first_name"=$1', '"age"=$2']
   const cols = keys.map((colName, idx) =>
-      `"${jsToSql[colName] || colName}"=$${idx + 1}`,
+    `"${jsToSql[colName] || colName}"=$${idx + 1}`,
   );
 
   return {
@@ -44,10 +44,10 @@ function sqlForFilter(dataToFilter) {
     return {
       whereClause: "",
       values: [],
-    }
+    };
   };
 
- whereClause
+  whereClause;
 
   return {
     whereClause: cols.join(", "),
