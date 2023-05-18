@@ -50,11 +50,11 @@ function ensureIsAdmin(req, res, next) {
     throw new UnauthorizedError();
   }
 
-  if (res.locals.user?.isAdmin) {
+  if (res.locals.user?.isAdmin === true) {
     return next();
   }
 
-  throw new ForbiddenError();
+  throw new ForbiddenError(); //FIXME: but actually unauthorized
 }
 
 /** Middleware to use when they must be an admin OR
@@ -64,17 +64,21 @@ function ensureIsAdmin(req, res, next) {
  *
  * If not admin / not acting on self, raises Forbidden.
  */
+
+//FIXME: orIsCorrectUser
 function ensureIsAdminOrUsernameIsSelf(req, res, next) {
+
+  //FIXME: store user in const
   if (!res.locals.user?.username) {
     throw new UnauthorizedError();
   }
 
-  if (res.locals.user?.isAdmin ||
-    res.locals.user?.username === req.params.username) {
+  if (res.locals.user?.isAdmin === true ||
+    (res.locals.user?.username === req.params.username)) {
     return next();
   }
 
-  throw new ForbiddenError();
+  throw new ForbiddenError(); //FIXME: but actually unauthorized
 }
 
 

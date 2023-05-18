@@ -68,7 +68,7 @@ router.get("/", async function (req, res, next) {
     companyFilterSchema,
     { required: true }
   );
-  if (!validator.valid) {
+  if (!validator.valid) { //TODO: add a test here
     const errs = validator.errors.map(e => e.stack);
     throw new BadRequestError(errs);
   }

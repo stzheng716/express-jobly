@@ -82,7 +82,6 @@ router.get("/:username", ensureIsAdminOrUsernameIsSelf,
  *
  * Authorization required: login if for self, admin for others
  **/
-// FIXME: don't let user update user update to isAdmin
 router.patch("/:username", ensureIsAdminOrUsernameIsSelf,
   async function (req, res, next) {
     const validator = jsonschema.validate(
