@@ -13,7 +13,7 @@
             "minimum": 0
         },
         "hasEquity": {
-            "type": "boolean",
+            "type": "boolean"
         }
     },
     "additionalProperties": false

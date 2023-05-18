@@ -25,7 +25,7 @@ class Job {
                                   company_handle)
               VALUES ($1, $2, $3, $4)
               RETURNING
-                  id
+                  id,
                   title,
                   salary,
                   equity,
@@ -39,7 +39,7 @@ class Job {
     );
 
     const job = result.rows[0];
-
+    console.log(job)
     return job;
   }
 
@@ -51,7 +51,7 @@ class Job {
   static async findAll(filterParams) {
     const { whereClause, values } = sqlForFilter(filterParams || {});
     const jobsRes = await db.query(`
-        SELECT id
+        SELECT id,
           title,
           salary,
           equity,
@@ -70,7 +70,7 @@ class Job {
    **/
   static async get(id) {
     const jobRes = await db.query(`
-        SELECT id
+        SELECT id,
           title,
           salary,
           equity,
@@ -109,7 +109,7 @@ class Job {
         SET ${setCols}
         WHERE id = ${idVarIdx}
         RETURNING
-          id
+          id,
           title,
           salary,
           equity,

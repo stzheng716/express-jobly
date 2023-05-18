@@ -25,7 +25,6 @@ const router = new express.Router();
  *
  * Authorization required: admin
  */
-
 router.post("/", ensureIsAdmin, async function (req, res, next) {
   const validator = jsonschema.validate(
     req.body,
@@ -59,14 +58,12 @@ router.get("/", async function (req, res, next) {
     query.minSalary = toNumOrNull(query.minSalary);
   }
 
-  //TODO: does this work for hasEquity?
-
   const validator = jsonschema.validate(
     query,
     jobFilterSchema,
     { required: true }
   );
-  if (!validator.valid) { //TODO: add a test here
+  if (!validator.valid) { 
     const errs = validator.errors.map(e => e.stack);
     throw new BadRequestError(errs);
   }

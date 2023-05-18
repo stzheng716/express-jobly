@@ -10,11 +10,12 @@
     },
     "salary": {
       "type": "integer",
-      "min": 0
+      "minimum": 0
     },
     "equity": {
       "type": "number",
-      "min": 0
+      "minimum": 0,
+      "maximum": 1.00
     },
     "companyHandle": {
       "type": "string",
