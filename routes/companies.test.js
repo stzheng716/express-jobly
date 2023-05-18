@@ -178,6 +178,11 @@ describe("GET /companies", function () {
       }
     });
   });
+
+  test("error: filter by non filter", async function () {
+    const resp = await request(app).get("/companies").query({ location: "New York" });
+    expect(resp.statusCode).toEqual(400);
+  });
 });
 
 /************************************** GET /companies/:handle */

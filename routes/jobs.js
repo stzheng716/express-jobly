@@ -74,31 +74,30 @@ router.get("/", async function (req, res, next) {
   return res.json({ jobs });
 });
 
-/** GET /[handle]  =>  { company }
+/** GET /[id]  =>  { job }
  *
- *  Company is { handle, name, description, numEmployees, logoUrl, jobs }
- *   where jobs is [{ id, title, salary, equity }, ...]
+ *  Job is { id, title, salary, equity, companyHandle }
  *
  * Authorization required: none
  */
 
-router.get("/:handle", async function (req, res, next) {
-  const company = await Company.get(req.params.handle);
-  return res.json({ company });
+router.get("/:id", async function (req, res, next) {
+  const job = await Job.get(req.params.id);
+  return res.json({ job });
 });
 
-/** PATCH /[handle] { fld1, fld2, ... } => { company }
+/** PATCH /[id] { fld1, fld2, ... } => { job }
  *
- * Patches company data.
+ * Patches job data.
  *
- * fields can be: { name, description, numEmployees, logo_url }
+ * fields can be: { title, salary, equity }
  *
- * Returns { handle, name, description, numEmployees, logo_url }
+ * Returns { id, title, salary, equity, companyHandle }
  *
  * Authorization required: admin
  */
 
-router.patch("/:handle", ensureIsAdmin, async function (req, res, next) {
+router.patch("/:id", ensureIsAdmin, async function (req, res, next) {
   const validator = jsonschema.validate(
     req.body,
     jobUpdateSchema,
@@ -109,18 +108,18 @@ router.patch("/:handle", ensureIsAdmin, async function (req, res, next) {
     throw new BadRequestError(errs);
   }
 
-  const company = await Company.update(req.params.handle, req.body);
-  return res.json({ company });
+  const job = await Job.update(req.params.id, req.body);
+  return res.json({ job });
 });
 
-/** DELETE /[handle]  =>  { deleted: handle }
+/** DELETE /[id]  =>  { deleted: id }
  *
  * Authorization: admin
  */
 
-router.delete("/:handle", ensureIsAdmin, async function (req, res, next) {
-  await Company.remove(req.params.handle);
-  return res.json({ deleted: req.params.handle });
+router.delete("/:id", ensureIsAdmin, async function (req, res, next) {
+  await Job.remove(req.params.id);
+  return res.json({ deleted: req.params.id });
 });
 
 
