@@ -38,21 +38,19 @@ function sqlForPartialUpdate(dataToUpdate, jsToSql) {
 }
 
 
-/** 
- * Take in an object with fields to filter {nameLike: "google", minEmployees:10, 
- * maxEmployee:100}, returns object with whereClause joined by 'AND' and array 
- * of values 
+/**
+ * Take in an object with fields to filter {nameLike: "google", minEmployees:10,
+ * maxEmployee:100}, returns object with whereClause joined by 'AND' and array
+ * of values
  * {
- *  whereClause: "WHERE num_employees >= $1 AND num_employees <= $2 AND name 
+ *  whereClause: "WHERE num_employees >= $1 AND num_employees <= $2 AND name
  *    ILIKE $3",
  *  values: [10, 100, `%testName%`]
  * }
- * 
+ *
 */
 
 function sqlForFilter(dataToFilter) {
-  const keys = Object.keys(dataToFilter);
-
   const filters = Filter.buildFilters(dataToFilter);
 
   const whereParts = [];

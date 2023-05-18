@@ -47,7 +47,7 @@ class Filter {
      * maxEmployee are inside POJO and throw error if minEmployee is greater than
      * maxEmployee */
 
-    static validateFilter(filtersPOJO){
+    static validateFilter(filtersPOJO) {
         if("minEmployees" in filtersPOJO && "maxEmployees" in filtersPOJO) {
             if(filtersPOJO.minEmployees > filtersPOJO.maxEmployees) {
                 throw new BadRequestError(`minEmployees can't be greater than maxEmployees`)

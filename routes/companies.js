@@ -52,7 +52,9 @@ router.post("/", ensureLoggedIn, async function (req, res, next) {
  */
 
 router.get("/", async function (req, res, next) {
-  console.log(req.query)
+
+  //FIXME: convert min/maxEmployees to int here  NOTE req.query should be READ-ONLY
+
   const validator = jsonschema.validate(
     req.query,
     companyFilterSchema,
