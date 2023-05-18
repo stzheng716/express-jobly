@@ -48,8 +48,6 @@ class Job {
    * Returns [{ id, title, salary, equity, companyHandle }, ...]
    * */
 
-//FIXME: add new filters
-
   static async findAll(filterParams) {
     const { whereClause, values } = sqlForFilter(filterParams || {});
     const jobsRes = await db.query(`
@@ -98,7 +96,6 @@ class Job {
    *
    * Throws NotFoundError if not found.
    */
-
   static async update(id, data) {
     const { setCols, values } = sqlForPartialUpdate(
       data,
@@ -129,7 +126,6 @@ class Job {
    *
    * Throws NotFoundError if job not found.
    **/
-
   static async remove(id) {
     const result = await db.query(`
         DELETE

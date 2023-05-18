@@ -17,12 +17,18 @@ class Filter {
     }
 
     /** Generate a where clause and '$' + index for the position of filter was
-     * passed in */
+     * passed in
+     *
+     * OR null if there is no whereStringPart for this filter (eg if the filter
+     * is disabled)
+     * */
     getWhereStringPart(startingParamIndex) {
         throw new Error("should not instantiate abstract Filter");
     }
 
-    /** Get value of specified value for this filter */
+    /** Get value of specified value for this filter
+     *  OR null if there is no value for this filter
+     */
     getValue() {
         return this.value;
     }
@@ -56,9 +62,9 @@ class Filter {
      * maxEmployee */
 
     static validateFilter(filtersPOJO) {
-        if("minEmployees" in filtersPOJO && "maxEmployees" in filtersPOJO) {
-            if(Number(filtersPOJO.minEmployees) > Number(filtersPOJO.maxEmployees)) {
-                throw new BadRequestError(`minEmployees can't be greater than maxEmployees`)
+        if ("minEmployees" in filtersPOJO && "maxEmployees" in filtersPOJO) {
+            if (Number(filtersPOJO.minEmployees) > Number(filtersPOJO.maxEmployees)) {
+                throw new BadRequestError(`minEmployees can't be greater than maxEmployees`);
             }
         }
     }
@@ -100,10 +106,54 @@ class CompanyNameLikeFilter extends Filter {
     }
 }
 
+class TitleFilter extends Filter {
+    constructor(title) {
+        super();
+        this.title = title;
+    }
+
+    getWhereStringPart(startingParamIndex) {
+        return `title ILIKE $${startingParamIndex}`;
+    }
+
+    /** overridden to add '%'s for SQL ILIKE*/
+    getValue() {
+        return `%${this.title}%`;
+    }
+}
+
+class MinSalaryFilter extends Filter {
+    constructor(minSalary) {
+        super(minSalary);
+    }
+
+    getWhereStringPart(startingParamIndex) {
+        return `salary >= $${startingParamIndex}`;
+    }
+}
+
+class HasEquityFilter extends Filter {
+    constructor(enabled) {
+        super();
+        this.enabled = enabled;
+    }
+
+    getWhereStringPart(startingParamIndex) {
+        return enabled ? `equity >= 0` : null;
+    }
+
+    getValue() {
+        return null;
+    }
+}
+
 const filterMap = {
     "minEmployees": MinEmployeesFilter,
     "maxEmployees": MaxEmployeesFilter,
     "nameLike": CompanyNameLikeFilter,
+    "title": TitleFilter,
+    "minSalary": MinSalaryFilter,
+    "hasEquity": HasEquityFilter
 };
 
 

@@ -57,8 +57,15 @@ function sqlForFilter(dataToFilter) {
   const values = [];
 
   for (const filter of filters) {
-    whereParts.push(filter.getWhereStringPart(values.length + 1));
-    values.push(filter.getValue());
+    const whereStringPart = filter.getWhereStringPart(values.length + 1);
+    if (whereStringPart) {
+      whereParts.push(whereStringPart);
+    }
+
+    const filterVal = filter.getValue();
+    if (filterVal) {
+      values.push(filter.getValue());
+    }
   }
 
   return {
