@@ -1,11 +1,12 @@
 "use strict";
 
-/**Accept strings and returns null or integer  */
+/**Accept a string and returns it as a number or null if it can't be
+ * converted
+*/
+function toNumOrNull(str) {
+    const result = Number(str);
 
-function toIntOrNull(str){
-    const isNaNResult = Number(str);
-
-    return isNaN(isNaNResult) ? null : isNaNResult
+    return isNaN(result) ? null : result;
 }
 
-module.exports = { toIntOrNull };
+module.exports = { toNumOrNull: toNumOrNull };

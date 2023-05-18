@@ -3,11 +3,19 @@
 const { BadRequestError } = require("../expressError");
 
 /** Abstract class for filters use to generate WHERE clause for sql statements. */
-
 class Filter {
+
+    /**
+     * NOTE: should not use this abstract constructor!
+     * Creates a new filter
+     *
+     * @param {*} value the filter parameter from the user.
+     * for example would be 10 if they specified { minEmployees: 10 }
+     */
     constructor(value) {
         this.value = value;
     }
+
     /** Generate a where clause and '$' + index for the position of filter was
      * passed in */
     getWhereStringPart(startingParamIndex) {
