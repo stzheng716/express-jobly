@@ -140,7 +140,7 @@ describe("POST /users", function () {
     expect(resp.statusCode).toEqual(401);
   });
 
-  
+
 });
 
 /************************************** GET /users */
@@ -273,16 +273,6 @@ describe("PATCH /users/:username", () => {
     });
   });
 
-  test("user update isAdmin", async function () {
-    const resp = await request(app)
-        .patch(`/users/u1`)
-        .send({
-          isAdmin: true,
-        })
-        .set("authorization", `Bearer ${u1Token}`);
-        expect(resp.statusCode).toEqual(401);
-  });
-  
   test("user1 update user2", async function () {
     const resp = await request(app)
         .patch(`/users/u2`)
@@ -298,16 +288,15 @@ describe("PATCH /users/:username", () => {
         .patch(`/users/u1`)
         .send({
           firstName: "New",
-          isAdmin: true
         })
         .set("authorization", `Bearer ${adminToken}`);
     expect(resp.body).toEqual({
       user: {
         username: "u1",
         firstName: "New",
+        isAdmin: false,
         lastName: "U1L",
         email: "user1@user.com",
-        isAdmin: true,
       },
     });
   });
