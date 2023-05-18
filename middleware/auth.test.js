@@ -49,8 +49,6 @@ describe("authenticateJWT", function () {
   });
 });
 
-//FIXME: first read, and then ensure admin / correct user    pure middleware test
-
 describe("ensureLoggedIn", function () {
   test("works", function () {
     const req = {};
