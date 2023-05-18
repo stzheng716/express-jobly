@@ -7,6 +7,8 @@ const { BCRYPT_WORK_FACTOR } = require("../config");
 
 async function commonBeforeAll() {
   // noinspection SqlWithoutWhere
+  await db.query("DELETE FROM jobs");
+  // noinspection SqlWithoutWhere
   await db.query("DELETE FROM companies");
   // noinspection SqlWithoutWhere
   await db.query("DELETE FROM users");
@@ -29,6 +31,11 @@ async function commonBeforeAll() {
     await bcrypt.hash("password1", BCRYPT_WORK_FACTOR),
     await bcrypt.hash("password2", BCRYPT_WORK_FACTOR),
   ]);
+
+  await db.query(`
+  INSERT INTO jobs(title, salary, equity, company_handle)
+  VALUES ('test job title 1', 1, 0.01, 'c1'),
+         ('test job title 2', 2, 0.02, 'c1')`);
 }
 
 async function commonBeforeEach() {

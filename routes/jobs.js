@@ -63,11 +63,11 @@ router.get("/", async function (req, res, next) {
     jobFilterSchema,
     { required: true }
   );
-  if (!validator.valid) { 
+  if (!validator.valid) {
     const errs = validator.errors.map(e => e.stack);
     throw new BadRequestError(errs);
   }
-  const jobs = await Job.findAll(req.query);
+  const jobs = await Job.findAll(query);
   return res.json({ jobs });
 });
 

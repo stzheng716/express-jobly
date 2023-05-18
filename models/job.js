@@ -29,7 +29,7 @@ class Job {
                   title,
                   salary,
                   equity,
-                  company_handle AS companyHandle`,
+                  company_handle AS "companyHandle"`,
       [
         title,
         salary,
@@ -55,7 +55,7 @@ class Job {
           title,
           salary,
           equity,
-          company_handle AS companyHandle
+          company_handle AS "companyHandle"
         FROM jobs
         ${whereClause}
         ORDER BY id DESC`, values);
@@ -74,7 +74,7 @@ class Job {
           title,
           salary,
           equity,
-          company_handle AS companyHandle
+          company_handle AS "companyHandle"
         FROM jobs
         WHERE id = $1`, [id]);
 
@@ -113,7 +113,7 @@ class Job {
           title,
           salary,
           equity,
-          company_handle AS companyHandle`;
+          company_handle AS "companyHandle"`;
     const result = await db.query(querySql, [...values, id]);
     const job = result.rows[0];
 
