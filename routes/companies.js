@@ -52,8 +52,11 @@ router.post("/", ensureLoggedIn, async function (req, res, next) {
  */
 
 router.get("/", async function (req, res, next) {
-
   //FIXME: convert min/maxEmployees to int here  NOTE req.query should be READ-ONLY
+  let { minEmployees, maxEmployees, nameLike} = req.query
+
+  minEmployees = Number(minEmployees) ? Number(minEmployees) : minEmployees
+  maxEmployees = Number(maxEmployees) ? Number(maxEmployees) : maxEmployees
 
   const validator = jsonschema.validate(
     req.query,
