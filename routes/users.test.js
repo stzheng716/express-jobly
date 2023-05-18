@@ -137,7 +137,7 @@ describe("POST /users", function () {
           isAdmin: true,
         })
         .set("authorization", `Bearer ${u1Token}`);;
-    expect(resp.statusCode).toEqual(403);
+    expect(resp.statusCode).toEqual(401);
   });
 
 
@@ -194,7 +194,7 @@ describe("GET /users", function () {
     const resp = await request(app)
         .get("/users")
         .set("authorization", `Bearer ${u1Token}`);
-    expect(resp.statusCode).toEqual(403);
+    expect(resp.statusCode).toEqual(401);
   });
 });
 
@@ -235,7 +235,7 @@ describe("GET /users/:username", function () {
     const resp = await request(app)
         .get(`/users/u2`)
         .set("authorization", `Bearer ${u1Token}`);
-        expect(resp.statusCode).toEqual(403);
+        expect(resp.statusCode).toEqual(401);
   });
 
   test("unauth for anon", async function () {
@@ -280,7 +280,7 @@ describe("PATCH /users/:username", () => {
           firstName: "New",
         })
         .set("authorization", `Bearer ${u1Token}`);
-        expect(resp.statusCode).toEqual(403);
+        expect(resp.statusCode).toEqual(401);
   });
 
   test("works for admin", async function () {
@@ -366,7 +366,7 @@ describe("DELETE /users/:username", function () {
     const resp = await request(app)
         .delete(`/users/u2`)
         .set("authorization", `Bearer ${u1Token}`);
-        expect(resp.statusCode).toEqual(403);
+        expect(resp.statusCode).toEqual(401);
   });
 
   test("Admin delete user1", async function () {

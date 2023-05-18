@@ -46,15 +46,11 @@ function ensureLoggedIn(req, res, next) {
  * If logged but not admin, raises Forbidden.
  */
 function ensureIsAdmin(req, res, next) {
-  if (!res.locals.user?.username) {
-    throw new UnauthorizedError();
-  }
-
   if (res.locals.user?.isAdmin === true) {
     return next();
   }
 
-  throw new ForbiddenError(); //FIXME: but actually unauthorized
+  throw new UnauthorizedError();
 }
 
 /** Middleware to use when they must be an admin OR
@@ -65,20 +61,17 @@ function ensureIsAdmin(req, res, next) {
  * If not admin / not acting on self, raises Forbidden.
  */
 
-//FIXME: orIsCorrectUser
-function ensureIsAdminOrUsernameIsSelf(req, res, next) {
+function ensureIsAdminOrIsCorrectUser(req, res, next) {
+  const user = res.locals.user;
 
-  //FIXME: store user in const
-  if (!res.locals.user?.username) {
-    throw new UnauthorizedError();
-  }
-
-  if (res.locals.user?.isAdmin === true ||
-    (res.locals.user?.username === req.params.username)) {
+  if (user?.isAdmin === true ||
+    (user?.username &&
+      req?.params &&
+      user.username === req.params.username)) {
     return next();
   }
 
-  throw new ForbiddenError(); //FIXME: but actually unauthorized
+  throw new UnauthorizedError();
 }
 
 
@@ -86,5 +79,5 @@ module.exports = {
   authenticateJWT,
   ensureLoggedIn,
   ensureIsAdmin,
-  ensureIsAdminOrUsernameIsSelf
+  ensureIsAdminOrIsCorrectUser
 };
