@@ -40,8 +40,14 @@ function ensureLoggedIn(req, res, next) {
   throw new UnauthorizedError();
 }
 
+function ensureIsAdmin(req, res, next) {
+  if (res.locals.user?.isAdmin) return next();
+  throw new UnauthorizedError();
+}
+
 
 module.exports = {
   authenticateJWT,
   ensureLoggedIn,
+  ensureIsAdmin
 };

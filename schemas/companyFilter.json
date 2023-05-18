@@ -9,13 +9,11 @@
             "maxLength": 30
         },
         "minEmployees": {
-            "type": "string",
-            "pattern": "^\\d+$",
+            "type": "integer",
             "minimum": 0
         },
         "maxEmployees": {
-            "type": "string",
-            "pattern": "^\\d+$",
+            "type": "integer",
             "minimum": 0
         }
     },

@@ -12,6 +12,7 @@ const Company = require("../models/company");
 const companyNewSchema = require("../schemas/companyNew.json");
 const companyUpdateSchema = require("../schemas/companyUpdate.json");
 const companyFilterSchema = require("../schemas/companyFilter.json");
+const { toIntOrNull } = require("../helpers/util");
 
 const router = new express.Router();
 
@@ -29,7 +30,7 @@ router.post("/", ensureLoggedIn, async function (req, res, next) {
   const validator = jsonschema.validate(
     req.body,
     companyNewSchema,
-    {required: true}
+    { required: true }
   );
   if (!validator.valid) {
     const errs = validator.errors.map(e => e.stack);
@@ -52,16 +53,20 @@ router.post("/", ensureLoggedIn, async function (req, res, next) {
  */
 
 router.get("/", async function (req, res, next) {
-  //FIXME: convert min/maxEmployees to int here  NOTE req.query should be READ-ONLY
-  let { minEmployees, maxEmployees, nameLike} = req.query
 
-  minEmployees = Number(minEmployees) ? Number(minEmployees) : minEmployees
-  maxEmployees = Number(maxEmployees) ? Number(maxEmployees) : maxEmployees
+  const query = req.query
+  if ("minEmployees" in query) {
+    query.minEmployees = toIntOrNull(query.minEmployees)
+  }
+  
+  if ("maxEmployees" in query) {
+    query.maxEmployees = toIntOrNull(query.maxEmployees)
+  }
 
   const validator = jsonschema.validate(
-    req.query,
+    query,
     companyFilterSchema,
-    {required:true}
+    { required: true }
   );
   if (!validator.valid) {
     const errs = validator.errors.map(e => e.stack);
@@ -94,13 +99,12 @@ router.get("/:handle", async function (req, res, next) {
  *
  * Authorization required: login
  */
-// TODO: ask about how to valid req.query for ints without using regex
 
 router.patch("/:handle", ensureLoggedIn, async function (req, res, next) {
   const validator = jsonschema.validate(
     req.body,
     companyUpdateSchema,
-    {required:true}
+    { required: true }
   );
   if (!validator.valid) {
     const errs = validator.errors.map(e => e.stack);
