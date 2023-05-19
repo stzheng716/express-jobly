@@ -38,7 +38,7 @@ async function commonBeforeAll() {
     INSERT INTO jobs(title, salary, equity, company_handle)
     VALUES ('test job title 1', 1, 0.01, 'c1'),
           ('test job title 2', 2, 0.02, 'c1'),
-          ('test job title 3', 3, 0.03, 'c1')
+          ('test job title 3', 3, 0, 'c1')
     RETURNING id`);
 
   for (const row of result.rows) {
