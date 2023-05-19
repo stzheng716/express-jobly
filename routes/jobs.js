@@ -12,7 +12,7 @@ const Job = require("../models/job");
 const jobNewSchema = require("../schemas/jobNew.json");
 const jobUpdateSchema = require("../schemas/jobUpdate.json");
 const jobFilterSchema = require("../schemas/jobFilter.json");
-const { toNumOrNull } = require("../helpers/util");
+const { toNumOrNull, toBoolOrNull } = require("../helpers/util");
 
 const router = new express.Router();
 
@@ -56,6 +56,10 @@ router.get("/", async function (req, res, next) {
   const query = req.query;
   if ("minSalary" in query) {
     query.minSalary = toNumOrNull(query.minSalary);
+  }
+
+  if ("hasEquity" in query) {
+    query.hasEquity = toBoolOrNull(query.hasEquity);
   }
 
   const validator = jsonschema.validate(

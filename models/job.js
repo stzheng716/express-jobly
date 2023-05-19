@@ -50,6 +50,7 @@ class Job {
 
   static async findAll(filterParams) {
     const { whereClause, values } = sqlForFilter(filterParams || {});
+    console.log("WHERE CLAUSE:", whereClause);
     const jobsRes = await db.query(`
         SELECT id,
           title,

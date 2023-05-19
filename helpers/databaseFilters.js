@@ -139,7 +139,7 @@ class HasEquityFilter extends Filter {
     }
 
     getWhereStringPart(startingParamIndex) {
-        return enabled ? `equity >= 0` : null;
+        return this.enabled ? `equity > 0` : null;
     }
 
     getValue() {

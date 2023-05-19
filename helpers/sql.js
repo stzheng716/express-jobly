@@ -58,6 +58,9 @@ function sqlForFilter(dataToFilter) {
 
   for (const filter of filters) {
     const whereStringPart = filter.getWhereStringPart(values.length + 1);
+
+    console.log("WHERE STRING PART:", whereStringPart);
+
     if (whereStringPart) {
       whereParts.push(whereStringPart);
     }
@@ -69,7 +72,7 @@ function sqlForFilter(dataToFilter) {
   }
 
   return {
-    whereClause: values.length > 0 ? "WHERE " + whereParts.join(" AND "): "",
+    whereClause: whereParts.length > 0 ? "WHERE " + whereParts.join(" AND "): "",
     values
   };
 }
