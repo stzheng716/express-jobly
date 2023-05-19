@@ -72,7 +72,7 @@ describe("POST /jobs", function () {
       .set("authorization", `Bearer ${adminToken}`);
     expect(resp.statusCode).toEqual(400);
   });
-
+//FIXME: fix comment
   test("bad request with field", async function () {
     const resp = await request(app)
       .post("/jobs")
@@ -85,6 +85,7 @@ describe("POST /jobs", function () {
       .set("authorization", `Bearer ${adminToken}`);
     expect(resp.statusCode).toEqual(400);
   });
+  //FIXME: test the schema
 
   test("unauth for anon", async function () {
     const resp = await request(app)
@@ -233,12 +234,13 @@ describe("GET /jobs", function () {
     expect(resp.statusCode).toEqual(400);
   });
 });
+//FIXME: add error message
 
 /************************************** GET /jobs/:id */
 
 describe("GET /jobs/:id", function () {
   test("works for anon", async function () {
-    console.log("TESTJOB ID=",testJobIDs[2])
+
     const resp = await request(app).get(`/jobs/${testJobIDs[2]}`);
     expect(resp.body).toEqual({
       job: {
@@ -306,6 +308,7 @@ describe("PATCH /jobs/:id", function () {
     expect(resp.statusCode).toEqual(404);
   });
 
+  //FIXME: add schema error message
   test("bad request on id change attempt", async function () {
     const resp = await request(app)
     .patch(`/jobs/${testJobIDs[2]}`)

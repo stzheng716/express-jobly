@@ -58,6 +58,8 @@ describe("create", function () {
   });
 });
 
+//TODO: sad path need to be added
+
 /************************************** findAll */
 
 describe("findAll", function () {

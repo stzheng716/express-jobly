@@ -37,9 +37,8 @@ class Job {
         companyHandle
       ],
     );
-
+      //FIXME: make sure we a company exist before inserting job
     const job = result.rows[0];
-    console.log(job)
     return job;
   }
 
@@ -50,7 +49,7 @@ class Job {
 
   static async findAll(filterParams) {
     const { whereClause, values } = sqlForFilter(filterParams || {});
-    console.log("WHERE CLAUSE:", whereClause);
+// TODO: return a company name
     const jobsRes = await db.query(`
         SELECT id,
           title,
@@ -70,6 +69,7 @@ class Job {
    * Throws NotFoundError if not found.
    **/
   static async get(id) {
+  // TODO: return a company object
     const jobRes = await db.query(`
         SELECT id,
           title,

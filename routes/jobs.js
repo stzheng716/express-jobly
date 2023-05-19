@@ -85,7 +85,7 @@ router.get("/", async function (req, res, next) {
 router.get("/:id", async function (req, res, next) {
   const job = await Job.get(req.params.id);
   return res.json({ job });
-});
+}); //TODO: add return to docstring
 
 /** PATCH /[id] { fld1, fld2, ... } => { job }
  *
