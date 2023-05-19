@@ -199,7 +199,7 @@ describe("GET /companies/:handle", function () {
         logoUrl: "http://c1.img",
         jobs: [
           {title: 'test job title 1', salary: 1, equity: "0.01", companyHandle: 'c1', id: expect.any(Number)},
-          {title: 'test job title 2', salary: 2, equity: "0.02", companyHandle: 'c2', id: expect.any(Number)}
+          {title: 'test job title 2', salary: 2, equity: "0.02", companyHandle: 'c1', id: expect.any(Number)}
         ]
       },
     });
@@ -214,6 +214,7 @@ describe("GET /companies/:handle", function () {
         description: "Desc2",
         numEmployees: 2,
         logoUrl: "http://c2.img",
+        jobs: []
       },
     });
   });
