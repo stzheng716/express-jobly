@@ -33,11 +33,18 @@ To run the tests with coverage:
 
 Available Routes:
 
-*POST: /auth/token 
-*POST: /auth/register
-*GET/POST: /companies
-*GET/PATCH/DELETE: /companies:handle
-*GET/POST: /jobs
-*GET/PATCH/DELETE: /jobs:id
-*GET/POST: /users
-*GET/PATCH/DELETE: /users/:username
+* POST: /auth/token 
+
+* POST: /auth/register
+
+* GET/POST: /companies
+
+* GET/PATCH/DELETE: /companies:handle
+
+* GET/POST: /jobs
+
+* GET/PATCH/DELETE: /jobs:id
+
+* GET/POST: /users
+
+* GET/PATCH/DELETE: /users/:username
